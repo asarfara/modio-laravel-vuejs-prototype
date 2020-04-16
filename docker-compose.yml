@@ -1,0 +1,55 @@
+version: '3.7'
+
+networks:
+  modio:
+    driver: 'bridge'
+
+services:
+  fpm:
+    container_name: modio_php_fpm
+    build:
+      context: ./docker/php-fpm
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    networks:
+      - modio
+
+  nginx:
+    container_name: modio_nginx
+    image: nginx:latest
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/conf/mod.io.dev.internal.conf:/etc/nginx/conf.d/mod.io.dev.internal.conf
+      - ./docker/nginx/ssl/mod.io.dev.internal.crt:/etc/nginx/mod.io.dev.internal.crt
+      - ./docker/nginx/ssl/mod.io.dev.internal.key:/etc/nginx/mod.io.dev.internal.key
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - mariadb
+      - fpm
+    networks:
+      - modio
+
+  mariadb:
+    container_name: modio_mariadb
+    image: mariadb:latest
+    environment:
+        MYSQL_ROOT_PASSWORD: "admin"
+        MYSQL_DATABASE: "modio"
+        MYSQL_USER: "modio"
+        MYSQL_PASSWORD: "modio"
+    ports:
+        - "3305:3306"
+    networks:
+        - modio
+
+  memcached:
+    container_name: modio_memcached
+    image: memcached:latest
+    ports:
+      - "11211:11211"
+    command: ["-m", "1024m"]
+    networks:
+      - modio

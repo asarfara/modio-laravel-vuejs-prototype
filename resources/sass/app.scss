@@ -1,0 +1,28 @@
+@import 'utilities/spacing';
+
+.app {
+    background: #2c2b3f;
+}
+
+.app__search {
+    background-color: #fff;
+}
+
+.product-card {
+    width: 75%;
+    margin: auto;
+}
+
+.product-card__header {
+    background-color: #171727;
+    color: #fff;
+    font-weight: bold;
+}
+
+.product-card__image {
+
+    img {
+        height: 100%;
+        width: 100%;
+    }
+}
