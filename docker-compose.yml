@@ -24,7 +24,7 @@ services:
       - ./docker/nginx/ssl/mod.io.dev.internal.crt:/etc/nginx/mod.io.dev.internal.crt
       - ./docker/nginx/ssl/mod.io.dev.internal.key:/etc/nginx/mod.io.dev.internal.key
     ports:
-      - "80:80"
+      - "8080:80"
       - "443:443"
     links:
       - mariadb
