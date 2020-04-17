@@ -179,7 +179,6 @@ return [
         /*
          * Third Party Service Providers
          */
-        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*
